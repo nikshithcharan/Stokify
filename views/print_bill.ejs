@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .large {
+            font-size: 1.2em;
+        }
+
+        .total {
+            color: #fb7578;
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo text-center">
+            <h2>SuperMarket Automation Software</h2>
+        </div>
+        
+        <table>
+            <tr>
+                <td>Invoice No:</td>
+                <td><%= bill.id %></td>
+            </tr>
+            <tr>
+                <td>Invoice Date:</td>
+                <td><%= bill.date.toLocaleDateString() %></td>
+            </tr>
+            <tr>
+                <td>Invoice Time:</td>
+                <td><%= bill.date.toLocaleTimeString() %></td>
+            </tr>
+        </table>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Unit Price (Rs.)</th>
+                    <th>Item Price (Rs.)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (var i=0; i<bill.bill_items.length; i++) { %>
+                    <tr>
+                        <td><%= bill.bill_items[i].item_code %></td>
+                        <td><%= bill.bill_items[i].name %></td>
+                        <td><%= bill.bill_items[i].quantity %></td>
+                        <td><%= bill.bill_items[i].unit_price %></td>
+                        <td class="bold"><%= bill.bill_items[i].unit_price * bill.bill_items[i].quantity %></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+        
+        <table>
+            <tr>
+                <th>SubTotal</th>
+            </tr>
+            <tr>
+                <td class="large">Rs. <%= bill.sub_total %></td>
+            </tr>
+        </table>
+        
+        <div class="footer">
+            <p class="total">Thank you!</p>
+        </div>
+    </div>
+</body>
+</html>
